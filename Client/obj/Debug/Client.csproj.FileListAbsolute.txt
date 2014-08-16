@@ -1,0 +1,8 @@
+E:\WCFAssignment\EmployeeManagementService\Client\bin\Debug\Client.exe.config
+E:\WCFAssignment\EmployeeManagementService\Client\bin\Debug\Client.exe
+E:\WCFAssignment\EmployeeManagementService\Client\bin\Debug\Client.pdb
+E:\WCFAssignment\EmployeeManagementService\Client\obj\Debug\Client.exe
+E:\WCFAssignment\EmployeeManagementService\Client\obj\Debug\Client.pdb
+E:\WCFAssignment\EmployeeManagementService\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+E:\WCFAssignment\EmployeeManagementService\Client\bin\Debug\EmployeeManagementService.dll
+E:\WCFAssignment\EmployeeManagementService\Client\bin\Debug\EmployeeManagementService.pdb
