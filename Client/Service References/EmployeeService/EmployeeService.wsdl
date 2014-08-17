@@ -13,6 +13,12 @@
   <wsdl:message name="AddEmployeeService_CreateEmployee_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateEmployeeResponse" />
   </wsdl:message>
+  <wsdl:message name="AddEmployeeService_AddRemark_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRemark" />
+  </wsdl:message>
+  <wsdl:message name="AddEmployeeService_AddRemark_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRemarkResponse" />
+  </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_GetAllEmployeeDetails_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllEmployeeDetails" />
   </wsdl:message>
@@ -36,6 +42,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/AddEmployeeService/CreateEmployee" message="tns:AddEmployeeService_CreateEmployee_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/AddEmployeeService/CreateEmployeeResponse" message="tns:AddEmployeeService_CreateEmployee_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddRemark">
+      <wsdl:input wsaw:Action="http://tempuri.org/AddEmployeeService/AddRemark" message="tns:AddEmployeeService_AddRemark_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/AddEmployeeService/AddRemarkResponse" message="tns:AddEmployeeService_AddRemark_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="RetriveEmployeeService">
     <wsdl:operation name="GetAllEmployeeDetails">
@@ -55,6 +65,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="CreateEmployee">
       <soap:operation soapAction="http://tempuri.org/AddEmployeeService/CreateEmployee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRemark">
+      <soap:operation soapAction="http://tempuri.org/AddEmployeeService/AddRemark" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

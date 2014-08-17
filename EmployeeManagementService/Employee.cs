@@ -14,7 +14,11 @@ namespace EmployeeManagementService
     {
         [OperationContract]
         void CreateEmployee(int id, string name, string remark, DateTime date);
-       
+
+        [OperationContract]
+        void AddRemark(string remark, int id);
+
+        
     }
 
     [ServiceContract]
@@ -30,8 +34,10 @@ namespace EmployeeManagementService
         [OperationContract(Name = "SearchByName")]
         EmployeeDetails GetEmployeeDetails(string name);
 
+        [OperationContract(Name = "SearchByRemark")]
+        EmployeeDetails GetEmployeeDetailsByRemark(string remark);
         
-    }
+     }
 
     [DataContract]
     public class EmployeeDetails

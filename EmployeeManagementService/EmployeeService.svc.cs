@@ -9,16 +9,16 @@ using System.Text;
 
 namespace EmployeeManagementService
 {
-   
+
     public class EmployeeService : AddEmployeeService, RetriveEmployeeService
     {
 
-        public  List<EmployeeDetails> listEmployee = new List<EmployeeDetails>();
-       
-        public void CreateEmployee(int id , string name , string remark , DateTime date)
+        public List<EmployeeDetails> listEmployee = new List<EmployeeDetails>();
+
+        public void CreateEmployee(int id, string name, string remark, DateTime date)
         {
-            listEmployee.Add(new EmployeeDetails() { EmployeeId = id, EmployeeName = name, RemarkText = remark , RemarkDate = date });
-            
+            listEmployee.Add(new EmployeeDetails() { EmployeeId = id, EmployeeName = name, RemarkText = remark, RemarkDate = date });
+
         }
 
         public List<EmployeeDetails> GetAllEmployeeDetails()
@@ -28,7 +28,7 @@ namespace EmployeeManagementService
             {
                 return listEmployee;
             }
-            else 
+            else
             {
                 return null;
             }
@@ -37,17 +37,30 @@ namespace EmployeeManagementService
 
         public EmployeeDetails GetEmployeeDetails(int id)
         {
-
             return listEmployee.FirstOrDefault(p => p.EmployeeId == id);
-
-
         }
 
         public EmployeeDetails GetEmployeeDetails(string name)
         {
-
             return listEmployee.FirstOrDefault(p => p.EmployeeName == name);
-
         }
+
+        public void AddRemark(string remark, int id) 
+        {
+            var index = listEmployee.FindIndex(p => p.EmployeeId == id);
+
+            if (index != -1) 
+            {
+                listEmployee[index].RemarkText = remark;
+                                
+            }
+                  
+        }
+
+        public EmployeeDetails GetEmployeeDetailsByRemark(string remark)
+        {
+            return listEmployee.FirstOrDefault(p => p.RemarkText == remark);
+        }
+
     }
 }

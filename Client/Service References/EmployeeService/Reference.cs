@@ -9,102 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace Client.EmployeeService {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EmployeeDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
-    [System.SerializableAttribute()]
-    public partial class EmployeeDetails : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int EmployeeIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmployeeNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime RemarkDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RemarkTextField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int EmployeeId {
-            get {
-                return this.EmployeeIdField;
-            }
-            set {
-                if ((this.EmployeeIdField.Equals(value) != true)) {
-                    this.EmployeeIdField = value;
-                    this.RaisePropertyChanged("EmployeeId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EmployeeName {
-            get {
-                return this.EmployeeNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmployeeNameField, value) != true)) {
-                    this.EmployeeNameField = value;
-                    this.RaisePropertyChanged("EmployeeName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime RemarkDate {
-            get {
-                return this.RemarkDateField;
-            }
-            set {
-                if ((this.RemarkDateField.Equals(value) != true)) {
-                    this.RemarkDateField = value;
-                    this.RaisePropertyChanged("RemarkDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RemarkText {
-            get {
-                return this.RemarkTextField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RemarkTextField, value) != true)) {
-                    this.RemarkTextField = value;
-                    this.RaisePropertyChanged("RemarkText");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EmployeeService.AddEmployeeService")]
@@ -112,6 +17,9 @@ namespace Client.EmployeeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/CreateEmployee", ReplyAction="http://tempuri.org/AddEmployeeService/CreateEmployeeResponse")]
         void CreateEmployee(int id, string name, string remark, System.DateTime date);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/AddRemark", ReplyAction="http://tempuri.org/AddEmployeeService/AddRemarkResponse")]
+        void AddRemark(string remark, int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -144,6 +52,10 @@ namespace Client.EmployeeService {
         public void CreateEmployee(int id, string name, string remark, System.DateTime date) {
             base.Channel.CreateEmployee(id, name, remark, date);
         }
+        
+        public void AddRemark(string remark, int id) {
+            base.Channel.AddRemark(remark, id);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -151,13 +63,13 @@ namespace Client.EmployeeService {
     public interface RetriveEmployeeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetails", ReplyAction="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetailsResponse")]
-        Client.EmployeeService.EmployeeDetails[] GetAllEmployeeDetails();
+        EmployeeManagementService.EmployeeDetails[] GetAllEmployeeDetails();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/SearchById", ReplyAction="http://tempuri.org/RetriveEmployeeService/SearchByIdResponse")]
-        Client.EmployeeService.EmployeeDetails SearchById(int id);
+        EmployeeManagementService.EmployeeDetails SearchById(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/SearchByName", ReplyAction="http://tempuri.org/RetriveEmployeeService/SearchByNameResponse")]
-        Client.EmployeeService.EmployeeDetails SearchByName(string name);
+        EmployeeManagementService.EmployeeDetails SearchByName(string name);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -187,15 +99,15 @@ namespace Client.EmployeeService {
                 base(binding, remoteAddress) {
         }
         
-        public Client.EmployeeService.EmployeeDetails[] GetAllEmployeeDetails() {
+        public EmployeeManagementService.EmployeeDetails[] GetAllEmployeeDetails() {
             return base.Channel.GetAllEmployeeDetails();
         }
         
-        public Client.EmployeeService.EmployeeDetails SearchById(int id) {
+        public EmployeeManagementService.EmployeeDetails SearchById(int id) {
             return base.Channel.SearchById(id);
         }
         
-        public Client.EmployeeService.EmployeeDetails SearchByName(string name) {
+        public EmployeeManagementService.EmployeeDetails SearchByName(string name) {
             return base.Channel.SearchByName(name);
         }
     }

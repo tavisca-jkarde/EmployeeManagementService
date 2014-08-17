@@ -17,11 +17,14 @@ namespace Client
             var employeeList =  new EmployeeManagementService.EmployeeService(); ;
 
             while (true)
-            { 
+            {
+            Console.WriteLine("\n");
             Console.WriteLine("1. Add Employee ");
             Console.WriteLine("2. Retrive All Employee ");
             Console.WriteLine("3. Retrive Employee By Id ");
             Console.WriteLine("4. Retrive Employee By Name ");
+            Console.WriteLine("5. Add Remark");
+            Console.WriteLine("6. Retrive Employee By Remark"); 
             Console.WriteLine("\n");
             Console.WriteLine("Please select option");
             var answer = Console.ReadLine();
@@ -33,6 +36,7 @@ namespace Client
 
                     do
                     {
+                        
                         Console.WriteLine("Do you want to add Employee yes or no?");
                         value = Console.ReadLine();
                         if (value.ToLower() == "no") {
@@ -50,6 +54,7 @@ namespace Client
                         DateTime date = DateTime.Today;
 
                         employeeList.CreateEmployee(employeeId, name, remark, date);
+                                               
 
                     } while (value == "yes");
                     
@@ -113,7 +118,37 @@ namespace Client
                     }
                     break;
 
-                        
+                case "5" :
+
+                    Console.WriteLine("Please Enter The Employee ID");
+                    int employeeID = Convert.ToInt32(Console.ReadLine());
+
+                    Console.WriteLine("Please Enter Remark of Employee");
+                    string remarkValue = Console.ReadLine();
+                    employeeList.AddRemark(remarkValue, employeeID);
+
+                    break;
+
+                case "6":
+
+                    Console.WriteLine("Please Enter Remark of Employee");
+                    string getEmployeeByRemark = Console.ReadLine();
+                    var retriveEmployeeByRemark = employeeList.GetEmployeeDetailsByRemark(getEmployeeByRemark);
+
+                    if (retriveEmployeeByRemark != null)
+                    {
+                        Console.WriteLine("Employee ID : " + retriveEmployeeByRemark.EmployeeId);
+                        Console.WriteLine("Employee Name : " + retriveEmployeeByRemark.EmployeeName);
+                        Console.WriteLine("Employee Remark : " + retriveEmployeeByRemark.RemarkText);
+                        Console.WriteLine("Employee Remark Dade : " + retriveEmployeeByRemark.RemarkDate);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Employee Not Found!");
+
+                    }
+                    break;
+                       
             }
                                
         }

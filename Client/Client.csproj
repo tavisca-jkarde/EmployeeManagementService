@@ -55,9 +55,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\EmployeeService\Client.EmployeeService.EmployeeDetails.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
+    <None Include="Properties\DataSources\EmployeeManagementService.EmployeeDetails.datasource" />
     <None Include="Service References\EmployeeService\EmployeeService.wsdl" />
     <None Include="Service References\EmployeeService\EmployeeService.xsd">
       <SubType>Designer</SubType>
