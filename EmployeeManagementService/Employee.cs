@@ -13,9 +13,11 @@ namespace EmployeeManagementService
     public interface AddEmployeeService
     {
         [OperationContract]
+        [FaultContract(typeof(FaultDetails))]
         void CreateEmployee(int id, string name, string remark, DateTime date);
 
         [OperationContract]
+        [FaultContract(typeof(FaultDetails))]
         void AddRemark(string remark, int id);
 
         
@@ -26,15 +28,19 @@ namespace EmployeeManagementService
     {
 
         [OperationContract]
+        [FaultContract(typeof(FaultDetails))]
         List<EmployeeDetails> GetAllEmployeeDetails();
 
         [OperationContract (Name="SearchById")]
+        [FaultContract(typeof(FaultDetails))]
         EmployeeDetails GetEmployeeDetails(int id);
 
         [OperationContract(Name = "SearchByName")]
+        [FaultContract(typeof(FaultDetails))]
         EmployeeDetails GetEmployeeDetails(string name);
 
         [OperationContract(Name = "SearchByRemark")]
+        [FaultContract(typeof(FaultDetails))]
         EmployeeDetails GetEmployeeDetailsByRemark(string remark);
         
      }
@@ -55,4 +61,18 @@ namespace EmployeeManagementService
         public DateTime RemarkDate { get; set; }
 
     }
+
+
+        [DataContract]
+    public class FaultDetails
+    {
+               
+        [DataMember]
+        public string ExceptionMessage;
+
+        [DataMember]
+        public string InnerException;
+
+    }       
+
 }

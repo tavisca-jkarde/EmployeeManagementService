@@ -16,9 +16,11 @@ namespace Client.EmployeeService {
     public interface AddEmployeeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/CreateEmployee", ReplyAction="http://tempuri.org/AddEmployeeService/CreateEmployeeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/AddEmployeeService/CreateEmployeeFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
         void CreateEmployee(int id, string name, string remark, System.DateTime date);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/AddRemark", ReplyAction="http://tempuri.org/AddEmployeeService/AddRemarkResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/AddEmployeeService/AddRemarkFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
         void AddRemark(string remark, int id);
     }
     
@@ -63,13 +65,20 @@ namespace Client.EmployeeService {
     public interface RetriveEmployeeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetails", ReplyAction="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetailsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetailsFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
         EmployeeManagementService.EmployeeDetails[] GetAllEmployeeDetails();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/SearchById", ReplyAction="http://tempuri.org/RetriveEmployeeService/SearchByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/RetriveEmployeeService/SearchByIdFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
         EmployeeManagementService.EmployeeDetails SearchById(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/SearchByName", ReplyAction="http://tempuri.org/RetriveEmployeeService/SearchByNameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/RetriveEmployeeService/SearchByNameFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
         EmployeeManagementService.EmployeeDetails SearchByName(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/SearchByRemark", ReplyAction="http://tempuri.org/RetriveEmployeeService/SearchByRemarkResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/RetriveEmployeeService/SearchByRemarkFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
+        EmployeeManagementService.EmployeeDetails SearchByRemark(string remark);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -109,6 +118,10 @@ namespace Client.EmployeeService {
         
         public EmployeeManagementService.EmployeeDetails SearchByName(string name) {
             return base.Channel.SearchByName(name);
+        }
+        
+        public EmployeeManagementService.EmployeeDetails SearchByRemark(string remark) {
+            return base.Channel.SearchByRemark(remark);
         }
     }
 }

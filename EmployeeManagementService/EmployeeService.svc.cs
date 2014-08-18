@@ -17,49 +17,117 @@ namespace EmployeeManagementService
 
         public void CreateEmployee(int id, string name, string remark, DateTime date)
         {
-            listEmployee.Add(new EmployeeDetails() { EmployeeId = id, EmployeeName = name, RemarkText = remark, RemarkDate = date });
+            try
+            {
+                listEmployee.Add(new EmployeeDetails() { EmployeeId = id, EmployeeName = name, RemarkText = remark, RemarkDate = date });
+            }
+            catch
+            {
+
+                FaultDetails ex = new FaultDetails();
+                ex.ExceptionMessage = "Exception occured while creating employee record.";
+                ex.InnerException = "Inner exception from Employee Management service.";
+
+                throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Create Employee Error"));
+            }
 
         }
 
         public List<EmployeeDetails> GetAllEmployeeDetails()
         {
-
-            if (listEmployee != null)
+            try
             {
-                return listEmployee;
-            }
-            else
-            {
-                return null;
-            }
 
+                if (listEmployee.Count != 0)
+                {
+                    return listEmployee;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                FaultDetails ex = new FaultDetails();
+                ex.ExceptionMessage = "Exception occured while getting all employee record.";
+                ex.InnerException = "Inner exception from Employee Management service.";
+
+                throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Get All Employee Error"));
+            }
         }
 
         public EmployeeDetails GetEmployeeDetails(int id)
         {
-            return listEmployee.FirstOrDefault(p => p.EmployeeId == id);
+            try
+            {
+                return listEmployee.FirstOrDefault(p => p.EmployeeId == id);
+            }
+            catch
+            {
+                FaultDetails ex = new FaultDetails();
+                ex.ExceptionMessage = "Exception occured while getting employee record by EmployeeID.";
+                ex.InnerException = "Inner exception from Employee Management service.";
+
+                throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Get EmployeeId Error"));
+            }
         }
 
         public EmployeeDetails GetEmployeeDetails(string name)
         {
-            return listEmployee.FirstOrDefault(p => p.EmployeeName == name);
+            try
+            {
+                return listEmployee.FirstOrDefault(p => p.EmployeeName == name);
+            }
+            catch
+            {
+                FaultDetails ex = new FaultDetails();
+                ex.ExceptionMessage = "Exception occured while getting employee record by Employee Name.";
+                ex.InnerException = "Inner exception from Employee Management service.";
+
+                throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Get EmployeeName Error"));
+            }
         }
 
-        public void AddRemark(string remark, int id) 
+        public void AddRemark(string remark, int id)
         {
-            var index = listEmployee.FindIndex(p => p.EmployeeId == id);
-
-            if (index != -1) 
+            try
             {
-                listEmployee[index].RemarkText = remark;
-                                
+                var index = listEmployee.FindIndex(p => p.EmployeeId == id);
+
+                if (index != -1)
+                {
+                    listEmployee[index].RemarkText = remark;
+
+                }
+
             }
-                  
+            catch
+            {
+                FaultDetails ex = new FaultDetails();
+                ex.ExceptionMessage = "Exception occured while add remark";
+                ex.InnerException = "Inner exception from Employee Management service.";
+
+                throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Add Remark Error"));
+
+            }
+
         }
 
         public EmployeeDetails GetEmployeeDetailsByRemark(string remark)
         {
-            return listEmployee.FirstOrDefault(p => p.RemarkText == remark);
+            try
+            {
+                return listEmployee.FirstOrDefault(p => p.RemarkText == remark);
+            }
+            catch
+            {
+                FaultDetails ex = new FaultDetails();
+                ex.ExceptionMessage = "Exception occured while getting employee record by Employee Remark.";
+                ex.InnerException = "Inner exception from Employee Management service.";
+
+                throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Get EmployeeRemark Error"));
+            }
         }
 
     }
