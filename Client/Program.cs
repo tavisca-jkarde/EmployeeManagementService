@@ -6,7 +6,7 @@ using Client.EmployeeService;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using EmployeeManagementService;
+
 
 namespace Client
 {
@@ -14,7 +14,8 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            var employeeList = new EmployeeManagementService.EmployeeService(); ;
+            var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService");
+            var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
 
             while (true)
             {
@@ -84,7 +85,9 @@ namespace Client
 
                         try
                         {
-                            var retriveEmployee = employeeList.GetAllEmployeeDetails();
+                            
+                            var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
+
                             if (retriveEmployee != null)
                             {
                                 foreach (var index in retriveEmployee)
@@ -123,9 +126,10 @@ namespace Client
 
                         try
                         {
+                           
                             Console.WriteLine("Please Enter The Employee ID");
                             int empId = Convert.ToInt32(Console.ReadLine());
-                            var retriveEmployeeById = employeeList.GetEmployeeDetails(empId);
+                            var retriveEmployeeById = employeeRetrive.SearchById(empId);
 
                             if (retriveEmployeeById != null)
                             {
@@ -162,9 +166,10 @@ namespace Client
 
                         try
                         {
+                           
                             Console.WriteLine("Enter the employee name");
                             string employeeName = Console.ReadLine();
-                            var retriveEmployeeByName = employeeList.GetEmployeeDetails(employeeName);
+                            var retriveEmployeeByName = employeeRetrive.SearchByName(employeeName);
 
                             if (retriveEmployeeByName != null)
                             {
@@ -200,6 +205,7 @@ namespace Client
 
                         try
                         {
+
                             Console.WriteLine("Please Enter The Employee ID");
                             int employeeID = Convert.ToInt32(Console.ReadLine());
 
@@ -229,9 +235,10 @@ namespace Client
 
                         try
                         {
+                            
                             Console.WriteLine("Please Enter Remark of Employee");
                             string getEmployeeByRemark = Console.ReadLine();
-                            var retriveEmployeeByRemark = employeeList.GetEmployeeDetailsByRemark(getEmployeeByRemark);
+                            var retriveEmployeeByRemark = employeeRetrive.SearchByRemark(getEmployeeByRemark);
 
                             if (retriveEmployeeByRemark != null)
                             {

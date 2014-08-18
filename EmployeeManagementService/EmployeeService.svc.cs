@@ -9,7 +9,7 @@ using System.Text;
 
 namespace EmployeeManagementService
 {
-
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class EmployeeService : AddEmployeeService, RetriveEmployeeService
     {
 
@@ -19,13 +19,21 @@ namespace EmployeeManagementService
         {
             try
             {
-                listEmployee.Add(new EmployeeDetails() { EmployeeId = id, EmployeeName = name, RemarkText = remark, RemarkDate = date });
+                if (listEmployee.Any(p => p.EmployeeId == id))
+                {
+                    throw new FaultException(new FaultReason("Employee Already Exist"), new FaultCode("Duplicate Employee"));
+                }
+                else {
+
+                    listEmployee.Add(new EmployeeDetails() { EmployeeId = id, EmployeeName = name, RemarkText = remark, RemarkDate = date });
+                }
+                
             }
             catch
             {
 
                 FaultDetails ex = new FaultDetails();
-                ex.ExceptionMessage = "Exception occured while creating employee record.";
+                ex.ExceptionMessage = "Exception occured Employee Allready Exist.";
                 ex.InnerException = "Inner exception from Employee Management service.";
 
                 throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Create Employee Error"));

@@ -63,10 +63,9 @@ namespace EmployeeManagementService
     }
 
 
-        [DataContract]
+    [DataContract]
     public class FaultDetails
-    {
-               
+    {               
         [DataMember]
         public string ExceptionMessage;
 
