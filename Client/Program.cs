@@ -39,7 +39,6 @@ namespace Client
                         {
                             try
                             {
-
                                 Console.WriteLine("Do you want to add Employee yes or no?");
                                 value = Console.ReadLine();
                                 if (value.ToLower() == "no")

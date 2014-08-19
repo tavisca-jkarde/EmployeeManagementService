@@ -38,7 +38,7 @@ namespace EmployeeManagementServiceFixture
             }
             else
             {
-                Assert.Fail("Employee Not Found!");
+                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("103"));
             }
                        
         }
@@ -64,7 +64,7 @@ namespace EmployeeManagementServiceFixture
             }
             else
             {
-                Assert.Fail("Employee Not Found!");
+                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("103"));
             }
 
         }
@@ -79,9 +79,9 @@ namespace EmployeeManagementServiceFixture
         {
             var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
             var retriveEmployee = employeeRetrive.SearchById(101);
-            if (retriveEmployee == null) {
-                Assert.Fail("Employee Does not exist");
-
+            if (retriveEmployee == null)
+            {
+                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("104"));
             }
         }
 
@@ -97,10 +97,9 @@ namespace EmployeeManagementServiceFixture
             var retriveEmployee = employeeRetrive.SearchByName("Jayvant");
             if (retriveEmployee == null)
             {
-                Assert.Fail("Employee Does not exist");
+                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("105"));
 
             }
-
         }
         
         /// <summary>
@@ -134,6 +133,8 @@ namespace EmployeeManagementServiceFixture
             Assert.AreEqual(retriveEmployee.Length, 1);
 
         }
+
+
 
         
     }

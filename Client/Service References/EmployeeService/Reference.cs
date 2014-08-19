@@ -66,7 +66,7 @@ namespace Client.EmployeeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetails", ReplyAction="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetailsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/RetriveEmployeeService/GetAllEmployeeDetailsFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
-        EmployeeManagementService.EmployeeDetails[] GetAllEmployeeDetails();
+        System.Collections.Generic.List<EmployeeManagementService.EmployeeDetails> GetAllEmployeeDetails();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/RetriveEmployeeService/SearchById", ReplyAction="http://tempuri.org/RetriveEmployeeService/SearchByIdResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/RetriveEmployeeService/SearchByIdFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
@@ -108,7 +108,7 @@ namespace Client.EmployeeService {
                 base(binding, remoteAddress) {
         }
         
-        public EmployeeManagementService.EmployeeDetails[] GetAllEmployeeDetails() {
+        public System.Collections.Generic.List<EmployeeManagementService.EmployeeDetails> GetAllEmployeeDetails() {
             return base.Channel.GetAllEmployeeDetails();
         }
         

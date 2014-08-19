@@ -12,16 +12,27 @@ namespace EmployeeManagementService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class EmployeeService : AddEmployeeService, RetriveEmployeeService
     {
-
+        /// <summary>
+        /// Create List for the Employee
+        /// </summary>
         public List<EmployeeDetails> listEmployee = new List<EmployeeDetails>();
+        private int _employeeId = 1;
 
+        /// <summary>
+        /// To create Employee.
+        /// If employee already exist then throw Fault exception.
+        /// </summary>
+        /// <param name="id">Employee Id</param>
+        /// <param name="name">Employee Name</param>
+        /// <param name="remark">Employee Remark</param>
+        /// <param name="date">Employee Remark Date</param>
         public void CreateEmployee(int id, string name, string remark, DateTime date)
         {
             try
             {
-                if (listEmployee.Any(p => p.EmployeeId == id))
+               if (listEmployee.Any(p => p.EmployeeId == id))
                 {
-                    throw new FaultException(new FaultReason("Employee Already Exist"), new FaultCode("Duplicate Employee"));
+                    throw new FaultException(new FaultReason("Employee Already Exist"), new FaultCode("Create Employee Error"));
                 }
                 else {
 
@@ -31,16 +42,18 @@ namespace EmployeeManagementService
             }
             catch
             {
-
                 FaultDetails ex = new FaultDetails();
-                ex.ExceptionMessage = "Exception occured Employee Allready Exist.";
+                ex.ExceptionMessage = "Exception occured Employee All ready Exist.";
                 ex.InnerException = "Inner exception from Employee Management service.";
-
                 throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Create Employee Error"));
             }
 
         }
 
+        /// <summary>
+        /// Return Employee Record.
+        /// </summary>
+        /// <returns>All Employee Record</returns>
         public List<EmployeeDetails> GetAllEmployeeDetails()
         {
             try
@@ -65,6 +78,11 @@ namespace EmployeeManagementService
             }
         }
 
+        /// <summary>
+        /// Return Employee record by employee id.
+        /// </summary>
+        /// <param name="id">Employee Id</param>
+        /// <returns>return that employee record if employee ID exist</returns>
         public EmployeeDetails GetEmployeeDetails(int id)
         {
             try
@@ -81,6 +99,11 @@ namespace EmployeeManagementService
             }
         }
 
+        /// <summary>
+        /// Return Employee record by employee name.
+        /// </summary>
+        /// <param name="id">Employee name</param>
+        /// <returns>return that employee record if employee Name exist</returns>
         public EmployeeDetails GetEmployeeDetails(string name)
         {
             try
@@ -97,6 +120,12 @@ namespace EmployeeManagementService
             }
         }
 
+
+        /// <summary>
+        /// Add  or change remark if employee id exist in database.
+        /// </summary>
+        /// <param name="remark">Employee remark</param>
+        /// <param name="id">Employee Id</param>
         public void AddRemark(string remark, int id)
         {
             try
@@ -106,7 +135,6 @@ namespace EmployeeManagementService
                 if (index != -1)
                 {
                     listEmployee[index].RemarkText = remark;
-
                 }
 
             }
@@ -122,6 +150,11 @@ namespace EmployeeManagementService
 
         }
 
+        /// <summary>
+        /// Return employee record by employee remark.
+        /// </summary>
+        /// <param name="remark">Employee Remark</param>
+        /// <returns>Employee Record if Remark exist.</returns>
         public EmployeeDetails GetEmployeeDetailsByRemark(string remark)
         {
             try
