@@ -114,8 +114,8 @@ namespace EmployeeManagementServiceFixture
                 using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
                 {
                     employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-
-                    var retriveEmployee = employeeRetrive.SearchByName("Jayvant");
+                    string employeeName = "Jayvant";
+                    var retriveEmployee = employeeRetrive.SearchByName(employeeName);
                     if (retriveEmployee == null)
                     {
                         Assert.Fail("Employee Does not exist");
@@ -141,7 +141,8 @@ namespace EmployeeManagementServiceFixture
                     using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
                     {
                         employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-                        var retriveEmployee = employeeRetrive.SearchByRemark("Good");
+                        string remark = "Good";
+                        var retriveEmployee = employeeRetrive.SearchByRemark(remark);
                         if (retriveEmployee == null)
                         {
                             Assert.Fail("Employee Does not exist");
@@ -187,7 +188,7 @@ namespace EmployeeManagementServiceFixture
                     using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
                     {
                         employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-                        string remark = "Bad";
+                        string remark = "";
                         var retriveEmployee = employeeRetrive.SearchByRemark(remark);
                         Assert.AreEqual(retriveEmployee.RemarkText, remark);
                     }
@@ -213,7 +214,7 @@ namespace EmployeeManagementServiceFixture
                     using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
                     {
                         employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-                        string empName = "Sunil";
+                        string empName = "";
                         var retriveEmployee = employeeRetrive.SearchByName(empName);
                         Assert.AreEqual(retriveEmployee.EmployeeName, empName);
 
@@ -240,7 +241,7 @@ namespace EmployeeManagementServiceFixture
                     using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
                     {
                         employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-                        int empId = 110;
+                        int empId = 0;
                         var retriveEmployee = employeeRetrive.SearchById(empId);
                         Assert.AreEqual(retriveEmployee.EmployeeId, empId);
 
@@ -266,7 +267,8 @@ namespace EmployeeManagementServiceFixture
                 using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
                 {                    
                     employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-                    employeeList.DeleteEmployee(102);
+                    int employeeID = 0;
+                    employeeList.DeleteEmployee(employeeID);
                     
                 }
             }

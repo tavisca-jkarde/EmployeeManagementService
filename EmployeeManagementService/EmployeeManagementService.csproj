@@ -65,11 +65,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomBehaviorSection.cs" />
     <Compile Include="EmployeeService.svc.cs">
       <DependentUpon>EmployeeService.svc</DependentUpon>
     </Compile>
     <Compile Include="Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationBehavior.cs" />
+    <Compile Include="ValidationParameterInspector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

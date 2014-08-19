@@ -154,12 +154,21 @@ namespace Client
 
                             }
                         }
-                        catch (Exception ex)
+                        catch (FormatException ex)
                         {
 
-                            Console.WriteLine("Error occured when{0}", ex.Message);
+                            Console.WriteLine("Error occured when{0}", ex.ToString());
 
                         }
+                        catch (ArgumentNullException ex)
+                        {
+                            Console.WriteLine("Error occured when{0}", ex.ToString());
+
+                        }
+                        catch (Exception ex) {
+                            Console.WriteLine("Error occured when{0}", ex.ToString());
+                        }
+                            
                         break;
 
                     case "4":
