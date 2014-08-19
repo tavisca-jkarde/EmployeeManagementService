@@ -9,6 +9,14 @@ namespace EmployeeManagementServiceFixture
     [TestClass]
     public class TestEmployeeService
     {
+        private TestContext testContextInstance;
+
+        public TestContext TestContext
+        {
+            get { return testContextInstance; }
+            set { testContextInstance = value; }
+        }
+
         /// <summary>
         /// To clear the employee list before run any test case.
         /// </summary>
@@ -26,13 +34,22 @@ namespace EmployeeManagementServiceFixture
         /// then retrive employee to check the existing employee same or not.
         /// </summary>
         [TestMethod]
+        [DeploymentItem(@"E:\WCFAssignment\EmployeeManagementService\EmployeeManagementServiceFixture\EmployeeDataSource.xml")]
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML",
+                   @"E:\WCFAssignment\EmployeeManagementService\EmployeeManagementServiceFixture\EmployeeDataSource.xml",
+                   "Employee",
+                    DataAccessMethod.Sequential)]
         public void CreateEmployeeShouldThrow()
         {
             using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
             {
                 DateTime date = DateTime.Now;
-                   
-                employeeList.CreateEmployee(101, "Jayvant", "Bad", date);
+
+                var employeeId = Convert.ToInt32(testContextInstance.DataRow["EmployeeId"].ToString());
+                var employeeName = testContextInstance.DataRow["EmployeeName"].ToString();
+                var employeeRemark = testContextInstance.DataRow["EmployeeRemark"].ToString();
+
+                employeeList.CreateEmployee(employeeId, employeeName, employeeRemark, date);
                 var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
                 var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
 
@@ -40,9 +57,9 @@ namespace EmployeeManagementServiceFixture
                 {
                     foreach (var index in retriveEmployee)
                     {
-                        Assert.AreEqual(index.EmployeeId, 101);
-                        Assert.AreEqual(index.EmployeeName, "Jayvant");
-                        Assert.AreEqual(index.RemarkText, "Bad");
+                        Assert.AreEqual(index.EmployeeId, employeeId);
+                        Assert.AreEqual(index.EmployeeName, employeeName);
+                        Assert.AreEqual(index.RemarkText, employeeRemark);
 
                     }
                 }
@@ -151,7 +168,8 @@ namespace EmployeeManagementServiceFixture
                     }
                 }
             }
-            catch (FaultException ex) {
+            catch (FaultException ex)
+            {
 
                 Assert.AreEqual(ex.Code.Name, "Get EmployeeRemark Error");
             }
@@ -265,11 +283,11 @@ namespace EmployeeManagementServiceFixture
             try
             {
                 using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
-                {                    
+                {
                     employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
                     int employeeID = 0;
                     employeeList.DeleteEmployee(employeeID);
-                    
+
                 }
             }
             catch (FaultException ex)
