@@ -66,7 +66,7 @@ namespace EmployeeManagementService
                 }
                 else
                 {
-                    return null;
+                    throw new Exception();
                 }
             }
             catch
@@ -172,7 +172,6 @@ namespace EmployeeManagementService
                 FaultDetails ex = new FaultDetails();
                 ex.ExceptionMessage = "Exception occured while add remark";
                 ex.InnerException = "Inner exception from Employee Management service.";
-
                 throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Add Remark Error"));
 
             }
@@ -222,5 +221,37 @@ namespace EmployeeManagementService
 
         }
 
+        /// <summary>
+        /// To Delete Employee from employee list.
+        /// </summary>
+
+        public void DeleteEmployee(int id)
+        {
+            try
+            {
+                var itemToRemove = listEmployee.SingleOrDefault(p => p.EmployeeId == id);
+
+                if (itemToRemove != null)
+                {
+                    listEmployee.Remove(itemToRemove);
+
+                }
+                else {
+
+                    throw new Exception();
+                }
+
+            }
+            catch (Exception)
+             
+            {
+                FaultDetails ex = new FaultDetails();
+                ex.ExceptionMessage = "Exception occured while delete employee";
+                ex.InnerException = "Inner exception from Employee Management service.";
+                throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Delete Employee Error"));
+
+            }
+        }
+        
     }
 }

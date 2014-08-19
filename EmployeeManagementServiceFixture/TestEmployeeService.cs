@@ -142,7 +142,7 @@ namespace EmployeeManagementServiceFixture
                     using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
                     {
                         employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-                        var retriveEmployee = employeeRetrive.SearchByRemark("Bad");
+                        var retriveEmployee = employeeRetrive.SearchByRemark("Good");
                         if (retriveEmployee == null)
                         {
                             Assert.Fail("Employee Does not exist");
@@ -162,7 +162,6 @@ namespace EmployeeManagementServiceFixture
         /// Check the length of employee
         /// </summary>
         [TestMethod]
-
         public void GetAllEmployeeShouldThrow()
         {
             using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
@@ -189,9 +188,9 @@ namespace EmployeeManagementServiceFixture
                     using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
                     {
                         employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
-                        string remark = "Good";
+                        string remark = "Bad";
                         var retriveEmployee = employeeRetrive.SearchByRemark(remark);
-                        //Assert.AreEqual(retriveEmployee.RemarkText, remark);
+                        Assert.AreEqual(retriveEmployee.RemarkText, remark);
                     }
 
                 }
@@ -233,7 +232,6 @@ namespace EmployeeManagementServiceFixture
         /// Below test case to check the employee Id.
         /// </summary>
         [TestMethod]
-        
         public void CheckEmployeeIdShouldThrow()
         {
             try
@@ -253,6 +251,25 @@ namespace EmployeeManagementServiceFixture
             catch (FaultException ex)
             {
                 Assert.AreEqual(ex.Code.Name, "Get EmployeeId Error");
+            }
+        }
+
+        [TestMethod]
+
+        public void DeleteEmployeeShouldThrow()
+        {
+            try
+            {
+                using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
+                {                    
+                    employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
+                    employeeList.DeleteEmployee(102);
+                    
+                }
+            }
+            catch (FaultException ex)
+            {
+                Assert.AreEqual(ex.Code.Name, "Delete Employee Error");
             }
         }
 

@@ -23,6 +23,9 @@ namespace EmployeeManagementService
         [OperationContract]
         void ClearEmployeeList();
 
+        [OperationContract]
+        [FaultContract(typeof(FaultDetails))]
+        void DeleteEmployee(int id);
         
     }
 

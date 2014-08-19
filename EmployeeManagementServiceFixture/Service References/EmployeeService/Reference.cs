@@ -181,6 +181,10 @@ namespace EmployeeManagementServiceFixture.EmployeeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/ClearEmployeeList", ReplyAction="http://tempuri.org/AddEmployeeService/ClearEmployeeListResponse")]
         void ClearEmployeeList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/DeleteEmployee", ReplyAction="http://tempuri.org/AddEmployeeService/DeleteEmployeeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementServiceFixture.EmployeeService.FaultDetails), Action="http://tempuri.org/AddEmployeeService/DeleteEmployeeFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
+        void DeleteEmployee(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -220,6 +224,10 @@ namespace EmployeeManagementServiceFixture.EmployeeService {
         
         public void ClearEmployeeList() {
             base.Channel.ClearEmployeeList();
+        }
+        
+        public void DeleteEmployee(int id) {
+            base.Channel.DeleteEmployee(id);
         }
     }
     

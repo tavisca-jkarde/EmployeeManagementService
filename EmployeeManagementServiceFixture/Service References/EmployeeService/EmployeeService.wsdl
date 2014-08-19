@@ -355,6 +355,15 @@
   <wsdl:message name="AddEmployeeService_ClearEmployeeList_OutputMessage">
     <wsdl:part name="parameters" element="tns:ClearEmployeeListResponse" />
   </wsdl:message>
+  <wsdl:message name="AddEmployeeService_DeleteEmployee_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEmployee" />
+  </wsdl:message>
+  <wsdl:message name="AddEmployeeService_DeleteEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEmployeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddEmployeeService_DeleteEmployee_FaultDetailsFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q3:FaultDetails" />
+  </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_GetAllEmployeeDetails_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllEmployeeDetails" />
   </wsdl:message>
@@ -362,7 +371,7 @@
     <wsdl:part name="parameters" element="tns:GetAllEmployeeDetailsResponse" />
   </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_GetAllEmployeeDetails_FaultDetailsFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q3:FaultDetails" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q4:FaultDetails" />
   </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_SearchById_InputMessage">
     <wsdl:part name="parameters" element="tns:SearchById" />
@@ -371,7 +380,7 @@
     <wsdl:part name="parameters" element="tns:SearchByIdResponse" />
   </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_SearchById_FaultDetailsFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q4:FaultDetails" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q5:FaultDetails" />
   </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_SearchByName_InputMessage">
     <wsdl:part name="parameters" element="tns:SearchByName" />
@@ -380,7 +389,7 @@
     <wsdl:part name="parameters" element="tns:SearchByNameResponse" />
   </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_SearchByName_FaultDetailsFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q5:FaultDetails" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q6:FaultDetails" />
   </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_SearchByRemark_InputMessage">
     <wsdl:part name="parameters" element="tns:SearchByRemark" />
@@ -389,7 +398,7 @@
     <wsdl:part name="parameters" element="tns:SearchByRemarkResponse" />
   </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_SearchByRemark_FaultDetailsFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q6:FaultDetails" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q7:FaultDetails" />
   </wsdl:message>
   <wsdl:portType name="AddEmployeeService">
     <wsdl:operation name="CreateEmployee">
@@ -405,6 +414,11 @@
     <wsdl:operation name="ClearEmployeeList">
       <wsdl:input wsaw:Action="http://tempuri.org/AddEmployeeService/ClearEmployeeList" message="tns:AddEmployeeService_ClearEmployeeList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/AddEmployeeService/ClearEmployeeListResponse" message="tns:AddEmployeeService_ClearEmployeeList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEmployee">
+      <wsdl:input wsaw:Action="http://tempuri.org/AddEmployeeService/DeleteEmployee" message="tns:AddEmployeeService_DeleteEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/AddEmployeeService/DeleteEmployeeResponse" message="tns:AddEmployeeService_DeleteEmployee_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/AddEmployeeService/DeleteEmployeeFaultDetailsFault" name="FaultDetailsFault" message="tns:AddEmployeeService_DeleteEmployee_FaultDetailsFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="RetriveEmployeeService">
@@ -463,6 +477,18 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEmployee">
+      <soap:operation soapAction="http://tempuri.org/AddEmployeeService/DeleteEmployee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultDetailsFault">
+        <soap:fault use="literal" name="FaultDetailsFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WSHttpBinding_RetriveEmployeeService" type="tns:RetriveEmployeeService">
