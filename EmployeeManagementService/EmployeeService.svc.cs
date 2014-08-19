@@ -16,7 +16,7 @@ namespace EmployeeManagementService
         /// Create List for the Employee
         /// </summary>
         public List<EmployeeDetails> listEmployee = new List<EmployeeDetails>();
-       
+
 
         /// <summary>
         /// To create Employee.
@@ -222,7 +222,7 @@ namespace EmployeeManagementService
         }
 
         /// <summary>
-        /// To Delete Employee from employee list by Employee Id.
+        /// To Delete Employee from employee list.
         /// </summary>
 
         public void DeleteEmployee(int id)

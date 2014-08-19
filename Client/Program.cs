@@ -95,7 +95,7 @@ namespace Client
                                     Console.WriteLine("Employee ID : " + index.EmployeeId);
                                     Console.WriteLine("Employee Name : " + index.EmployeeName);
                                     Console.WriteLine("Employee Remark : " + index.RemarkText);
-                                    Console.WriteLine("Employee Remark Dade : " + index.RemarkDate);
+                                    //Console.WriteLine("Employee Remark Dade : " + index.RemarkDate);
 
                                 }
                             }

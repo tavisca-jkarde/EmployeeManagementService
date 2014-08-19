@@ -9,7 +9,9 @@ namespace EmployeeManagementServiceFixture
     [TestClass]
     public class TestEmployeeService
     {
-
+        /// <summary>
+        /// To clear the employee list before run any test case.
+        /// </summary>
         [TestInitialize]
         public void ClearEmployeeList()
         {
@@ -24,18 +26,13 @@ namespace EmployeeManagementServiceFixture
         /// then retrive employee to check the existing employee same or not.
         /// </summary>
         [TestMethod]
-
         public void CreateEmployeeShouldThrow()
         {
             using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
             {
                 DateTime date = DateTime.Now;
-
-              
-
-                    
+                   
                 employeeList.CreateEmployee(101, "Jayvant", "Bad", date);
-                
                 var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
                 var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
 
@@ -135,7 +132,6 @@ namespace EmployeeManagementServiceFixture
         /// If employee Remark does not exist in database, it will fail.
         /// </summary>
         [TestMethod]
-
         public void GetEmployeeDetailsByRemarkShouldThrow()
         {
             try
@@ -257,8 +253,12 @@ namespace EmployeeManagementServiceFixture
             }
         }
 
-        [TestMethod]
 
+        /// <summary>
+        /// Below test case for to delete employee if Employee id exist.
+        /// if employee id does not exist then should throw exception.
+        /// </summary>
+        [TestMethod]
         public void DeleteEmployeeShouldThrow()
         {
             try
