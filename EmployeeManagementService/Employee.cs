@@ -78,6 +78,7 @@ namespace EmployeeManagementService
         [DataMember]
         public string InnerException;
 
-    }       
+    }
 
+     
 }

@@ -26,6 +26,7 @@ namespace Client
                 Console.WriteLine("4. Retrive Employee By Name ");
                 Console.WriteLine("5. Add Remark");
                 Console.WriteLine("6. Retrive Employee By Remark");
+                Console.WriteLine("7. Delete Employee");
                 Console.WriteLine("\n");
                 Console.WriteLine("Please select option");
                 var option = Console.ReadLine();
@@ -84,7 +85,7 @@ namespace Client
 
                         try
                         {
-                            
+
                             var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
 
                             if (retriveEmployee != null)
@@ -125,7 +126,7 @@ namespace Client
 
                         try
                         {
-                           
+
                             Console.WriteLine("Please Enter The Employee ID");
                             int empId = Convert.ToInt32(Console.ReadLine());
                             var retriveEmployeeById = employeeRetrive.SearchById(empId);
@@ -165,7 +166,7 @@ namespace Client
 
                         try
                         {
-                           
+
                             Console.WriteLine("Enter the employee name");
                             string employeeName = Console.ReadLine();
                             var retriveEmployeeByName = employeeRetrive.SearchByName(employeeName);
@@ -234,7 +235,7 @@ namespace Client
 
                         try
                         {
-                            
+
                             Console.WriteLine("Please Enter Remark of Employee");
                             string getEmployeeByRemark = Console.ReadLine();
                             var retriveEmployeeByRemark = employeeRetrive.SearchByRemark(getEmployeeByRemark);
@@ -270,6 +271,30 @@ namespace Client
                         }
                         break;
 
+                    case "7":
+                        try
+                        {
+                            Console.WriteLine("Please Enter The Employee ID");
+                            int empId = Convert.ToInt32(Console.ReadLine());
+                            employeeList.DeleteEmployee(empId);
+                            
+                        }
+                        catch (FaultException ex)
+                        {
+                            if (ex.Code.Name == "Delete Employee Error")
+                            {
+
+                                Console.WriteLine("Handling Get Employee Error{0}", ex.Reason);
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                            Console.WriteLine("Error occured when{0}", ex.Message);
+
+                        }
+                        break;
                 }
 
             }
