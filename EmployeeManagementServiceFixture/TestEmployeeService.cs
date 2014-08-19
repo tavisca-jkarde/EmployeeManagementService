@@ -7,40 +7,46 @@ using System.ServiceModel.Channels;
 namespace EmployeeManagementServiceFixture
 {
     [TestClass]
-    public class TestEmployeeService 
+    public class TestEmployeeService
     {
+
+        [TestInitialize]
+        public void ClearEmployeeList()
+        {
+
+            var clearList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService");
+            clearList.ClearEmployeeList();
+
+        }
 
         /// <summary>
         /// Below test case for Creating new employee.
         /// then retrive employee to check the existing employee same or not.
         /// </summary>
         [TestMethod]
-        
+
         public void CreateEmployeeShouldThrow()
         {
-            var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService");
-            DateTime date = DateTime.Now;
-
-            employeeList.CreateEmployee(101, "Jayvant", "Bad", date);
-
-            var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
-            var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
-
-            if (retriveEmployee != null)
+            using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
             {
-                foreach (var index in retriveEmployee)
+                DateTime date = DateTime.Now;
+
+                employeeList.CreateEmployee(101, "Jayvant", "Bad", date);
+
+                var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
+                var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
+
+                if (retriveEmployee != null)
                 {
-                    Assert.AreEqual(index.EmployeeId,101);
-                    Assert.AreEqual(index.EmployeeName, "Jayvant");
-                    Assert.AreEqual(index.RemarkText,"Bad");
-                   
+                    foreach (var index in retriveEmployee)
+                    {
+                        Assert.AreEqual(index.EmployeeId, 101);
+                        Assert.AreEqual(index.EmployeeName, "Jayvant");
+                        Assert.AreEqual(index.RemarkText, "Bad");
+
+                    }
                 }
             }
-            else
-            {
-                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("103"));
-            }
-                       
         }
 
         /// <summary>
@@ -49,22 +55,25 @@ namespace EmployeeManagementServiceFixture
         /// Then check the the remark of that employee.
         /// </summary>
         [TestMethod]
-        public void AddRemarkShouldThrow() 
+
+        public void AddRemarkShouldThrow()
         {
-            var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService");
-            employeeList.AddRemark("Good", 101);
 
-            var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
-            var retriveEmployee = employeeRetrive.SearchById(101);
-
-            if (retriveEmployee != null)
+            using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
             {
-                Assert.AreEqual(retriveEmployee.RemarkText, "Good");
+                employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
 
-            }
-            else
-            {
-                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("103"));
+                employeeList.AddRemark("Good", 101);
+
+                var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
+                var retriveEmployee = employeeRetrive.SearchById(101);
+
+                if (retriveEmployee != null)
+                {
+                    Assert.AreEqual(retriveEmployee.RemarkText, "Good");
+
+                }
+
             }
 
         }
@@ -75,13 +84,19 @@ namespace EmployeeManagementServiceFixture
         /// If employee Id does not exist in database, it will fail.
         /// </summary>
         [TestMethod]
-        public void GetEmployeeDetailsByIdShouldThrow() 
+        public void GetEmployeeDetailsByIdShouldThrow()
         {
-            var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
-            var retriveEmployee = employeeRetrive.SearchById(101);
-            if (retriveEmployee == null)
+            using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
             {
-                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("104"));
+                using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
+                {
+                    employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
+                    var retriveEmployee = employeeRetrive.SearchById(101);
+                    if (retriveEmployee == null)
+                    {
+                        Assert.Fail("Employee Does not exist");
+                    }
+                }
             }
         }
 
@@ -91,32 +106,54 @@ namespace EmployeeManagementServiceFixture
         /// If employee Name does not exist in database, it will fail.
         /// </summary>
         [TestMethod]
+
         public void GetEmployeeDetailsByNameShouldThrow()
         {
-            var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
-            var retriveEmployee = employeeRetrive.SearchByName("Jayvant");
-            if (retriveEmployee == null)
+            using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
             {
-                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("105"));
+                using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
+                {
+                    employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
 
+                    var retriveEmployee = employeeRetrive.SearchByName("Jayvant");
+                    if (retriveEmployee == null)
+                    {
+                        Assert.Fail("Employee Does not exist");
+
+                    }
+
+                }
             }
         }
-        
+
         /// <summary>
         /// Below test case for to get the Employee through Employee Remark.
         /// If employee Remark does exist in database, it will pass.
         /// If employee Remark does not exist in database, it will fail.
         /// </summary>
         [TestMethod]
+
         public void GetEmployeeDetailsByRemarkShouldThrow()
         {
-            var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
-            var retriveEmployee = employeeRetrive.SearchByRemark("Good");
-            if (retriveEmployee == null)
+            try
             {
-                //Assert.Fail("Employee Does not exist");
-                throw new FaultException(new FaultReason("Employee Does not exist"), new FaultCode("106"));
+                using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
+                {
+                    using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
+                    {
+                        employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
+                        var retriveEmployee = employeeRetrive.SearchByRemark("Bad");
+                        if (retriveEmployee == null)
+                        {
+                            Assert.Fail("Employee Does not exist");
 
+                        }
+                    }
+                }
+            }
+            catch (FaultException ex) {
+
+                Assert.AreEqual(ex.Code.Name, "Get EmployeeRemark Error");
             }
 
         }
@@ -125,17 +162,100 @@ namespace EmployeeManagementServiceFixture
         /// Check the length of employee
         /// </summary>
         [TestMethod]
+
         public void GetAllEmployeeShouldThrow()
         {
-            var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService");
-            var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
+            using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
+            {
+                using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
+                {
+                    employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
+                    var retriveEmployee = employeeRetrive.GetAllEmployeeDetails();
+                    Assert.AreEqual(retriveEmployee.Length, 1);
+                }
+            }
+        }
 
-            Assert.AreEqual(retriveEmployee.Length, 1);
+        /// <summary>
+        /// Below test case to check the employee remark.
+        /// </summary>
+        [TestMethod]
+        public void CheckEmployeeRemarkShouldThrow()
+        {
+            try
+            {
+                using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
+                {
+                    using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
+                    {
+                        employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
+                        string remark = "Good";
+                        var retriveEmployee = employeeRetrive.SearchByRemark(remark);
+                        //Assert.AreEqual(retriveEmployee.RemarkText, remark);
+                    }
+
+                }
+            }
+            catch (FaultException ex)
+            {
+                Assert.AreEqual(ex.Code.Name, "Get EmployeeRemark Error");
+            }
+        }
+
+        /// <summary>
+        /// Below test case to check the employee Name.
+        /// </summary>
+        [TestMethod]
+        public void CheckEmployeeNameShouldThrow()
+        {
+            try
+            {
+                using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
+                {
+                    using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
+                    {
+                        employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
+                        string empName = "Sunil";
+                        var retriveEmployee = employeeRetrive.SearchByName(empName);
+                        Assert.AreEqual(retriveEmployee.EmployeeName, empName);
+
+                    }
+                }
+            }
+            catch (FaultException ex)
+            {
+                Assert.AreEqual(ex.Code.Name, "Get EmployeeName Error");
+            }
 
         }
 
-
-
+        /// <summary>
+        /// Below test case to check the employee Id.
+        /// </summary>
+        [TestMethod]
         
+        public void CheckEmployeeIdShouldThrow()
+        {
+            try
+            {
+                using (var employeeList = new AddEmployeeServiceClient("BasicHttpBinding_AddEmployeeService"))
+                {
+                    using (var employeeRetrive = new RetriveEmployeeServiceClient("WSHttpBinding_RetriveEmployeeService"))
+                    {
+                        employeeList.CreateEmployee(101, "Jayvant", "Bad", DateTime.Today);
+                        int empId = 110;
+                        var retriveEmployee = employeeRetrive.SearchById(empId);
+                        Assert.AreEqual(retriveEmployee.EmployeeId, empId);
+
+                    }
+                }
+            }
+            catch (FaultException ex)
+            {
+                Assert.AreEqual(ex.Code.Name, "Get EmployeeId Error");
+            }
+        }
+
+
     }
 }

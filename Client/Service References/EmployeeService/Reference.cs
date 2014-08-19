@@ -22,6 +22,9 @@ namespace Client.EmployeeService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/AddRemark", ReplyAction="http://tempuri.org/AddEmployeeService/AddRemarkResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(EmployeeManagementService.FaultDetails), Action="http://tempuri.org/AddEmployeeService/AddRemarkFaultDetailsFault", Name="FaultDetails", Namespace="http://schemas.datacontract.org/2004/07/EmployeeManagementService")]
         void AddRemark(string remark, int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/AddEmployeeService/ClearEmployeeList", ReplyAction="http://tempuri.org/AddEmployeeService/ClearEmployeeListResponse")]
+        void ClearEmployeeList();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -57,6 +60,10 @@ namespace Client.EmployeeService {
         
         public void AddRemark(string remark, int id) {
             base.Channel.AddRemark(remark, id);
+        }
+        
+        public void ClearEmployeeList() {
+            base.Channel.ClearEmployeeList();
         }
     }
     

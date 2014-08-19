@@ -29,6 +29,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="ClearEmployeeList">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ClearEmployeeListResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetAllEmployeeDetails">
     <xs:complexType>
       <xs:sequence />

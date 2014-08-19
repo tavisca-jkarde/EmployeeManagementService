@@ -16,7 +16,7 @@ namespace EmployeeManagementService
         /// Create List for the Employee
         /// </summary>
         public List<EmployeeDetails> listEmployee = new List<EmployeeDetails>();
-        private int _employeeId = 1;
+
 
         /// <summary>
         /// To create Employee.
@@ -30,15 +30,16 @@ namespace EmployeeManagementService
         {
             try
             {
-               if (listEmployee.Any(p => p.EmployeeId == id))
+                if (listEmployee.Any(p => p.EmployeeId == id))
                 {
                     throw new FaultException(new FaultReason("Employee Already Exist"), new FaultCode("Create Employee Error"));
                 }
-                else {
+                else
+                {
 
                     listEmployee.Add(new EmployeeDetails() { EmployeeId = id, EmployeeName = name, RemarkText = remark, RemarkDate = date });
                 }
-                
+
             }
             catch
             {
@@ -85,12 +86,25 @@ namespace EmployeeManagementService
         /// <returns>return that employee record if employee ID exist</returns>
         public EmployeeDetails GetEmployeeDetails(int id)
         {
+
+            var getEmployeeById = listEmployee.FirstOrDefault(p => p.EmployeeId == id);
+
             try
             {
-                return listEmployee.FirstOrDefault(p => p.EmployeeId == id);
+                if (getEmployeeById == null)
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    return getEmployeeById;
+
+                }
+
             }
-            catch
+            catch 
             {
+
                 FaultDetails ex = new FaultDetails();
                 ex.ExceptionMessage = "Exception occured while getting employee record by EmployeeID.";
                 ex.InnerException = "Inner exception from Employee Management service.";
@@ -106,12 +120,27 @@ namespace EmployeeManagementService
         /// <returns>return that employee record if employee Name exist</returns>
         public EmployeeDetails GetEmployeeDetails(string name)
         {
+
+            var getEmployeeByName = listEmployee.FirstOrDefault(p => p.EmployeeName == name);
+
             try
             {
-                return listEmployee.FirstOrDefault(p => p.EmployeeName == name);
+
+                if (getEmployeeByName == null)
+                {
+
+                    throw new Exception();
+                }
+                else
+                {
+
+                    return getEmployeeByName;
+
+                }
             }
             catch
             {
+
                 FaultDetails ex = new FaultDetails();
                 ex.ExceptionMessage = "Exception occured while getting employee record by Employee Name.";
                 ex.InnerException = "Inner exception from Employee Management service.";
@@ -157,11 +186,22 @@ namespace EmployeeManagementService
         /// <returns>Employee Record if Remark exist.</returns>
         public EmployeeDetails GetEmployeeDetailsByRemark(string remark)
         {
+
+            var getEmployeeByRemark = listEmployee.FirstOrDefault(p => p.RemarkText == remark);
+
             try
             {
-                return listEmployee.FirstOrDefault(p => p.RemarkText == remark);
+                if (getEmployeeByRemark == null)
+                {
+                    throw new Exception();
+
+                }
+                else
+                {
+                    return getEmployeeByRemark;
+                }
             }
-            catch
+            catch (Exception)
             {
                 FaultDetails ex = new FaultDetails();
                 ex.ExceptionMessage = "Exception occured while getting employee record by Employee Remark.";
@@ -169,6 +209,17 @@ namespace EmployeeManagementService
 
                 throw new FaultException(new FaultReason(ex.ExceptionMessage), new FaultCode("Get EmployeeRemark Error"));
             }
+
+
+        }
+
+        /// <summary>
+        /// To clear the employee list.
+        /// </summary>
+        public void ClearEmployeeList()
+        {
+            listEmployee.Clear();
+
         }
 
     }

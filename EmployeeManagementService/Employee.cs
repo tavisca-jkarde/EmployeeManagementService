@@ -20,6 +20,9 @@ namespace EmployeeManagementService
         [FaultContract(typeof(FaultDetails))]
         void AddRemark(string remark, int id);
 
+        [OperationContract]
+        void ClearEmployeeList();
+
         
     }
 

@@ -349,6 +349,12 @@
   <wsdl:message name="AddEmployeeService_AddRemark_FaultDetailsFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/EmployeeManagementService" name="detail" element="q2:FaultDetails" />
   </wsdl:message>
+  <wsdl:message name="AddEmployeeService_ClearEmployeeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClearEmployeeList" />
+  </wsdl:message>
+  <wsdl:message name="AddEmployeeService_ClearEmployeeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClearEmployeeListResponse" />
+  </wsdl:message>
   <wsdl:message name="RetriveEmployeeService_GetAllEmployeeDetails_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllEmployeeDetails" />
   </wsdl:message>
@@ -395,6 +401,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/AddEmployeeService/AddRemark" message="tns:AddEmployeeService_AddRemark_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/AddEmployeeService/AddRemarkResponse" message="tns:AddEmployeeService_AddRemark_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/AddEmployeeService/AddRemarkFaultDetailsFault" name="FaultDetailsFault" message="tns:AddEmployeeService_AddRemark_FaultDetailsFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClearEmployeeList">
+      <wsdl:input wsaw:Action="http://tempuri.org/AddEmployeeService/ClearEmployeeList" message="tns:AddEmployeeService_ClearEmployeeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/AddEmployeeService/ClearEmployeeListResponse" message="tns:AddEmployeeService_ClearEmployeeList_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="RetriveEmployeeService">
@@ -444,6 +454,15 @@
       <wsdl:fault name="FaultDetailsFault">
         <soap:fault use="literal" name="FaultDetailsFault" namespace="" />
       </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ClearEmployeeList">
+      <soap:operation soapAction="http://tempuri.org/AddEmployeeService/ClearEmployeeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WSHttpBinding_RetriveEmployeeService" type="tns:RetriveEmployeeService">
